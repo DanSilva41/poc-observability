@@ -16,6 +16,8 @@
                 <maxDepthPerThrowable>30</maxDepthPerThrowable>
                 <maxLength>2048</maxLength>
                 <shortenedClassNameLength>20</shortenedClassNameLength>
+                <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
                 <rootCauseFirst>true</rootCauseFirst>
                 <inlineHash>true</inlineHash>
             </throwableConverter>
