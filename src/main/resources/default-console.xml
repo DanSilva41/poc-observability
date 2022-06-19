@@ -1,0 +1,14 @@
+<included>
+    <appender name="DEFAULT_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %file -> %M\(%line\) - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="DEFAULT_CONSOLE"/>
+    </root>
+
+</included>

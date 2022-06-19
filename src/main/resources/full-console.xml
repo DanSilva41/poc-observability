@@ -1,0 +1,29 @@
+<included>
+    <appender name="FULL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdc>true</includeMdc>
+            <fieldNames>
+                <timestamp>time</timestamp>
+                <version>[ignore]</version>
+                <levelValue>[ignore]</levelValue>
+            </fieldNames>
+            <excludeMdcKeyName>request-id</excludeMdcKeyName>
+            <provider class="net.logstash.logback.composite.loggingevent.LoggingEventPatternJsonProvider">
+                <omitEmptyFields>true</omitEmptyFields>
+                <pattern>{ "ketwords" : "%mdc{tags}", "context" : { "id": "%mdc{request-id}" } }</pattern>
+            </provider>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                <maxLength>2048</maxLength>
+                <shortenedClassNameLength>20</shortenedClassNameLength>
+                <rootCauseFirst>true</rootCauseFirst>
+                <inlineHash>true</inlineHash>
+            </throwableConverter>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="FULL_CONSOLE"/>
+    </root>
+
+</included>
