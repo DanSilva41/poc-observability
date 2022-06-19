@@ -126,7 +126,7 @@ tst_interface/Gemfile.lock
 tst_interface/logs
 
 # Log Files
-logs/
+logs/app-log
 
 /.classpath
 coverage/

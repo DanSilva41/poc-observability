@@ -1,10 +1,32 @@
 <included>
     <appender name="DEFAULT_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>
-                %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %file -> %M\(%line\) - %msg%n
-            </pattern>
-        </layout>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <fieldNames>
+                <timestamp>time</timestamp>
+                <version>[ignore]</version>
+                <levelValue>[ignore]</levelValue>
+            </fieldNames>
+            <includeMdc>true</includeMdc>
+            <excludeMdcKeyName>request-id</excludeMdcKeyName>
+            <excludeMdcKeyName>document-identifier</excludeMdcKeyName>
+            <provider class="net.logstash.logback.composite.loggingevent.LoggingEventPatternJsonProvider">
+                <omitEmptyFields>true</omitEmptyFields>
+                <pattern>{ "ketwords" : "%mdc{tags}", "context" : { "id": "%mdc{request-id}", "document-identifier": "%mdc{document-identifier}" } }</pattern>
+            </provider>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                <maxLength>2048</maxLength>
+                <shortenedClassNameLength>20</shortenedClassNameLength>
+                <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                <rootCauseFirst>true</rootCauseFirst>
+                <inlineHash>true</inlineHash>
+            </throwableConverter>
+            <jsonGeneratorDecorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                <defaultMask>****</defaultMask>
+                <path>document-identifier</path>
+            </jsonGeneratorDecorator>
+        </encoder>
     </appender>
 
     <root level="INFO">

@@ -1,5 +1,8 @@
 <included>
-    <appender name="FULL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <property name="LOG_FILE" value="${LOG_PATH:-logs/app-log}"/>
+
+    <appender name="DEFAULT_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_FILE}</file>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <fieldNames>
                 <timestamp>time</timestamp>
@@ -30,7 +33,7 @@
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="FULL_CONSOLE"/>
+        <appender-ref ref="DEFAULT_FILE"/>
     </root>
 
 </included>

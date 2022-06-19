@@ -5,10 +5,11 @@
         <then>
             <if condition='property("ENVIRONMENT").equalsIgnoreCase("local")'>
                 <then>
-                    <include resource="full-console.xml"/>
+                    <include resource="default-console.xml"/>
+                    <include resource="default-file.xml"/>
                 </then>
                 <else>
-                    <include resource="default-console.xml"/>
+                    <include resource="default-file.xml"/>
                 </else>
             </if>
         </then>
