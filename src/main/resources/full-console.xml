@@ -1,16 +1,17 @@
 <included>
     <appender name="FULL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <includeMdc>true</includeMdc>
             <fieldNames>
                 <timestamp>time</timestamp>
                 <version>[ignore]</version>
                 <levelValue>[ignore]</levelValue>
             </fieldNames>
+            <includeMdc>true</includeMdc>
             <excludeMdcKeyName>request-id</excludeMdcKeyName>
+            <excludeMdcKeyName>document-identifier</excludeMdcKeyName>
             <provider class="net.logstash.logback.composite.loggingevent.LoggingEventPatternJsonProvider">
                 <omitEmptyFields>true</omitEmptyFields>
-                <pattern>{ "ketwords" : "%mdc{tags}", "context" : { "id": "%mdc{request-id}" } }</pattern>
+                <pattern>{ "ketwords" : "%mdc{tags}", "context" : { "id": "%mdc{request-id}", "document-identifier": "%mdc{document-identifier}" } }</pattern>
             </provider>
             <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
                 <maxDepthPerThrowable>30</maxDepthPerThrowable>
@@ -21,6 +22,10 @@
                 <rootCauseFirst>true</rootCauseFirst>
                 <inlineHash>true</inlineHash>
             </throwableConverter>
+            <jsonGeneratorDecorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                <defaultMask>****</defaultMask>
+                <path>document-identifier</path>
+            </jsonGeneratorDecorator>
         </encoder>
     </appender>
 
