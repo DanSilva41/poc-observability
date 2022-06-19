@@ -1,0 +1,22 @@
+server:
+  port: ${PORT:8080}
+  servlet.context-path: /api
+
+management:
+  endpoints:
+    web:
+      exposure.include: "*"
+
+logging:
+  level:
+    root: INFO
+    web: INFO
+    org.springframework.web.servlet.DispatcherServlet: INFO
+
+spring:
+  application:
+    name: svc-poc-observability
+
+
+
+
