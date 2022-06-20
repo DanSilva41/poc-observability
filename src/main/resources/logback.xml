@@ -7,6 +7,7 @@
                 <then>
                     <include resource="default-console.xml"/>
                     <include resource="default-file.xml"/>
+                    <include resource="default-graylog.xml"/>
                 </then>
                 <else>
                     <include resource="default-file.xml"/>

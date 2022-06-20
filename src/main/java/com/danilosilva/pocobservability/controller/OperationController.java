@@ -16,6 +16,7 @@ public class OperationController {
     @GetMapping(value = "success")
     public ResponseEntity<String> getSuccess(@RequestHeader("document-identifier") final String documentIdentifier) {
         MDC.put(DOCUMENT_IDENTIFIER, documentIdentifier);
+        log.info("GET Request to success endpoint");
         return ResponseEntity.ok("Yep, success!");
     }
 
@@ -24,6 +25,7 @@ public class OperationController {
         @RequestHeader("document-identifier") final String documentIdentifier
     ) throws IllegalAccessException {
         MDC.put(DOCUMENT_IDENTIFIER, documentIdentifier);
+        log.info("GET Request to fails endpoint");
         throw new IllegalAccessException("Ops, fails...");
     }
 }
