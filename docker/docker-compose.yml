@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prothemeus_data:/prometheus
+    networks:
+      - observability-network
+    ports:
+      - "9090:9090"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "9090" ]
+      start_period: 10s
+    restart: unless-stopped
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+    networks:
+      - observability-network
+    ports:
+      - "3000:3000"
+    environment:
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "3000" ]
+      start_period: 10s
+    restart: unless-stopped
+
+networks:
+  observability-network:
+    driver: bridge
+
+volumes:
+  prothemeus_data:
+  grafana_data:
